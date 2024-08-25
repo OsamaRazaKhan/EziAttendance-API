@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="364bca217c00431d8ea02fe349b85f60" Name="Diagram1">
+        <EntityTypeShape EntityType="Attendence_Management_SystemModel.AdminAction" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Attendence_Management_SystemModel.Attendance" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Attendence_Management_SystemModel.Grade" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Attendence_Management_SystemModel.LeaveRequest" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Attendence_Management_SystemModel.User" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <AssociationConnector Association="Attendence_Management_SystemModel.FK__AdminActi__Admin__2739D489" ManuallyRouted="false" />
+        <AssociationConnector Association="Attendence_Management_SystemModel.FK__AdminActi__Targe__282DF8C2" ManuallyRouted="false" />
+        <AssociationConnector Association="Attendence_Management_SystemModel.FK__Attendanc__UserI__1CBC4616" ManuallyRouted="false" />
+        <AssociationConnector Association="Attendence_Management_SystemModel.FK__Grades__UserID__245D67DE" ManuallyRouted="false" />
+        <AssociationConnector Association="Attendence_Management_SystemModel.FK__LeaveRequ__UserI__208CD6FA" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

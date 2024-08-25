@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Attendence_Management_SystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdminActions">
+          <Key>
+            <PropertyRef Name="ActionID" />
+          </Key>
+          <Property Name="ActionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AdminID" Type="int" />
+          <Property Name="ActionType" Type="varchar" MaxLength="50" />
+          <Property Name="ActionDate" Type="date" />
+          <Property Name="TargetUserID" Type="int" />
+        </EntityType>
+        <EntityType Name="Attendance">
+          <Key>
+            <PropertyRef Name="AttendanceID" />
+          </Key>
+          <Property Name="AttendanceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+          <Property Name="LeaveRequest" Type="bit" />
+        </EntityType>
+        <EntityType Name="Grades">
+          <Key>
+            <PropertyRef Name="GradeID" />
+          </Key>
+          <Property Name="GradeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="Grade" Type="char" MaxLength="1" />
+          <Property Name="TotalDaysAttended" Type="int" />
+          <Property Name="GradePeriodStartDate" Type="date" />
+          <Property Name="GradePeriodEndDate" Type="date" />
+        </EntityType>
+        <EntityType Name="LeaveRequests">
+          <Key>
+            <PropertyRef Name="LeaveRequestID" />
+          </Key>
+          <Property Name="LeaveRequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="RequestDate" Type="date" />
+          <Property Name="LeaveDate" Type="date" />
+          <Property Name="Reason" Type="text" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FullName" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="ProfilePicture" Type="varbinary(max)" />
+          <Property Name="Role" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK__AdminActi__Admin__2739D489">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="AdminActions" Type="Self.AdminActions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="AdminActions">
+              <PropertyRef Name="AdminID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AdminActi__Targe__282DF8C2">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="AdminActions" Type="Self.AdminActions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="AdminActions">
+              <PropertyRef Name="TargetUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Attendanc__UserI__1CBC4616">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Grades__UserID__245D67DE">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Grades" Type="Self.Grades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Grades">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LeaveRequ__UserI__208CD6FA">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="LeaveRequests" Type="Self.LeaveRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="LeaveRequests">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Attendence_Management_SystemModelStoreContainer">
+          <EntitySet Name="AdminActions" EntityType="Self.AdminActions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Attendance" EntityType="Self.Attendance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grades" EntityType="Self.Grades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LeaveRequests" EntityType="Self.LeaveRequests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__AdminActi__Admin__2739D489" Association="Self.FK__AdminActi__Admin__2739D489">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="AdminActions" EntitySet="AdminActions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AdminActi__Targe__282DF8C2" Association="Self.FK__AdminActi__Targe__282DF8C2">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="AdminActions" EntitySet="AdminActions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Attendanc__UserI__1CBC4616" Association="Self.FK__Attendanc__UserI__1CBC4616">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Attendance" EntitySet="Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Grades__UserID__245D67DE" Association="Self.FK__Grades__UserID__245D67DE">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Grades" EntitySet="Grades" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LeaveRequ__UserI__208CD6FA" Association="Self.FK__LeaveRequ__UserI__208CD6FA">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="LeaveRequests" EntitySet="LeaveRequests" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Attendence_Management_SystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AdminAction">
+          <Key>
+            <PropertyRef Name="ActionID" />
+          </Key>
+          <Property Name="ActionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdminID" Type="Int32" />
+          <Property Name="ActionType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ActionDate" Type="DateTime" Precision="0" />
+          <Property Name="TargetUserID" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK__AdminActi__Admin__2739D489" FromRole="AdminActions" ToRole="Users" />
+          <NavigationProperty Name="User1" Relationship="Self.FK__AdminActi__Targe__282DF8C2" FromRole="AdminActions" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Attendance">
+          <Key>
+            <PropertyRef Name="AttendanceID" />
+          </Key>
+          <Property Name="AttendanceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="LeaveRequest" Type="Boolean" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Attendanc__UserI__1CBC4616" FromRole="Attendance" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Grade">
+          <Key>
+            <PropertyRef Name="GradeID" />
+          </Key>
+          <Property Name="GradeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="Grade1" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="TotalDaysAttended" Type="Int32" />
+          <Property Name="GradePeriodStartDate" Type="DateTime" Precision="0" />
+          <Property Name="GradePeriodEndDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Grades__UserID__245D67DE" FromRole="Grades" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="LeaveRequest">
+          <Key>
+            <PropertyRef Name="LeaveRequestID" />
+          </Key>
+          <Property Name="LeaveRequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="RequestDate" Type="DateTime" Precision="0" />
+          <Property Name="LeaveDate" Type="DateTime" Precision="0" />
+          <Property Name="Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK__LeaveRequ__UserI__208CD6FA" FromRole="LeaveRequests" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ProfilePicture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Role" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AdminActions" Relationship="Self.FK__AdminActi__Admin__2739D489" FromRole="Users" ToRole="AdminActions" />
+          <NavigationProperty Name="AdminActions1" Relationship="Self.FK__AdminActi__Targe__282DF8C2" FromRole="Users" ToRole="AdminActions" />
+          <NavigationProperty Name="Attendances" Relationship="Self.FK__Attendanc__UserI__1CBC4616" FromRole="Users" ToRole="Attendance" />
+          <NavigationProperty Name="Grades" Relationship="Self.FK__Grades__UserID__245D67DE" FromRole="Users" ToRole="Grades" />
+          <NavigationProperty Name="LeaveRequests" Relationship="Self.FK__LeaveRequ__UserI__208CD6FA" FromRole="Users" ToRole="LeaveRequests" />
+        </EntityType>
+        <Association Name="FK__AdminActi__Admin__2739D489">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="AdminActions" Type="Self.AdminAction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="AdminActions">
+              <PropertyRef Name="AdminID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AdminActi__Targe__282DF8C2">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="AdminActions" Type="Self.AdminAction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="AdminActions">
+              <PropertyRef Name="TargetUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Attendanc__UserI__1CBC4616">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Grades__UserID__245D67DE">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Grades" Type="Self.Grade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Grades">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LeaveRequ__UserI__208CD6FA">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="LeaveRequests" Type="Self.LeaveRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="LeaveRequests">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Attendence_Management_SystemEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdminActions" EntityType="Self.AdminAction" />
+          <EntitySet Name="Attendances" EntityType="Self.Attendance" />
+          <EntitySet Name="Grades" EntityType="Self.Grade" />
+          <EntitySet Name="LeaveRequests" EntityType="Self.LeaveRequest" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__AdminActi__Admin__2739D489" Association="Self.FK__AdminActi__Admin__2739D489">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="AdminActions" EntitySet="AdminActions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AdminActi__Targe__282DF8C2" Association="Self.FK__AdminActi__Targe__282DF8C2">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="AdminActions" EntitySet="AdminActions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Attendanc__UserI__1CBC4616" Association="Self.FK__Attendanc__UserI__1CBC4616">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Attendance" EntitySet="Attendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Grades__UserID__245D67DE" Association="Self.FK__Grades__UserID__245D67DE">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Grades" EntitySet="Grades" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LeaveRequ__UserI__208CD6FA" Association="Self.FK__LeaveRequ__UserI__208CD6FA">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="LeaveRequests" EntitySet="LeaveRequests" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Attendence_Management_SystemModelStoreContainer" CdmEntityContainer="Attendence_Management_SystemEntities">
+          <EntitySetMapping Name="AdminActions">
+            <EntityTypeMapping TypeName="Attendence_Management_SystemModel.AdminAction">
+              <MappingFragment StoreEntitySet="AdminActions">
+                <ScalarProperty Name="ActionID" ColumnName="ActionID" />
+                <ScalarProperty Name="AdminID" ColumnName="AdminID" />
+                <ScalarProperty Name="ActionType" ColumnName="ActionType" />
+                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+                <ScalarProperty Name="TargetUserID" ColumnName="TargetUserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Attendances">
+            <EntityTypeMapping TypeName="Attendence_Management_SystemModel.Attendance">
+              <MappingFragment StoreEntitySet="Attendance">
+                <ScalarProperty Name="AttendanceID" ColumnName="AttendanceID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="LeaveRequest" ColumnName="LeaveRequest" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grades">
+            <EntityTypeMapping TypeName="Attendence_Management_SystemModel.Grade">
+              <MappingFragment StoreEntitySet="Grades">
+                <ScalarProperty Name="GradeID" ColumnName="GradeID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Grade1" ColumnName="Grade" />
+                <ScalarProperty Name="TotalDaysAttended" ColumnName="TotalDaysAttended" />
+                <ScalarProperty Name="GradePeriodStartDate" ColumnName="GradePeriodStartDate" />
+                <ScalarProperty Name="GradePeriodEndDate" ColumnName="GradePeriodEndDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LeaveRequests">
+            <EntityTypeMapping TypeName="Attendence_Management_SystemModel.LeaveRequest">
+              <MappingFragment StoreEntitySet="LeaveRequests">
+                <ScalarProperty Name="LeaveRequestID" ColumnName="LeaveRequestID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="LeaveDate" ColumnName="LeaveDate" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Attendence_Management_SystemModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
